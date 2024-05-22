@@ -57,6 +57,7 @@ setup_kernelsu() {
     # Add entries in Makefile and Kconfig if not already existing
     grep -q "kernelsu" "$DRIVER_MAKEFILE" || printf "\nobj-\$(CONFIG_KSU) += kernelsu/\n" >> "$DRIVER_MAKEFILE" && echo "[+] Modified Makefile."
     grep -q "source \"drivers/kernelsu/Kconfig\"" "$DRIVER_KCONFIG" || sed -i "/endmenu/i\source \"drivers/kernelsu/Kconfig\"" "$DRIVER_KCONFIG" && echo "[+] Modified Kconfig."
+    grep -q "susfs" "$DRIVER_MAKEFILE" || printf "\nobj-\$(CONFIG_KSU_SUSFS) += susfs/\n" >> "$DRIVER_MAKEFILE" && echo "[+] Added SUSFS ඞ"
     echo '[+] Done.'
 }
 
