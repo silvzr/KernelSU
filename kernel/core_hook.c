@@ -383,11 +383,11 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
     if (current_uid().val == 0) {
         int error = 0;
 		if (arg2 == CMD_SUSFS_ADD_SUS_PATH) {
-			if (!access_ok(VERIFY_READ, (void __user*)arg3, sizeof(struct st_susfs_sus_path))) {
+			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_path))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_PATH -> arg3 is not accessible\n");
                 return 0;
 			}
-			if (!access_ok(VERIFY_READ, (void __user*)arg5, sizeof(error))) {
+			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_PATH -> arg5 is not accessible\n");
                 return 0;
 			}
@@ -396,11 +396,11 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		} else if (arg2 == CMD_SUSFS_ADD_SUS_MOUNT) {
-			if (!access_ok(VERIFY_READ, (void __user*)arg3, sizeof(struct st_susfs_sus_mount))) {
+			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_mount))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_MOUNT -> arg3 is not accessible\n");
                 return 0;
 			}
-			if (!access_ok(VERIFY_READ, (void __user*)arg5, sizeof(error))) {
+			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_MOUNT -> arg5 is not accessible\n");
                 return 0;
 			}
@@ -409,11 +409,11 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		} else if (arg2 == CMD_SUSFS_ADD_SUS_KSTAT) {
-			if (!access_ok(VERIFY_READ, (void __user*)arg3, sizeof(struct st_susfs_sus_kstat))) {
+			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_kstat))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_KSTAT -> arg3 is not accessible\n");
                 return 0;
 			}
-			if (!access_ok(VERIFY_READ, (void __user*)arg5, sizeof(error))) {
+			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_KSTAT -> arg5 is not accessible\n");
                 return 0;
 			}
@@ -422,11 +422,11 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		} else if (arg2 == CMD_SUSFS_UPDATE_SUS_KSTAT) {
-			if (!access_ok(VERIFY_READ, (void __user*)arg3, sizeof(struct st_susfs_sus_kstat))) {
+			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_kstat))) {
 				pr_err("susfs: CMD_SUSFS_UPDATE_SUS_KSTAT -> arg3 is not accessible\n");
                 return 0;
 			}
-			if (!access_ok(VERIFY_READ, (void __user*)arg5, sizeof(error))) {
+			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
 				pr_err("susfs: CMD_SUSFS_UPDATE_SUS_KSTAT -> arg5 is not accessible\n");
                 return 0;
 			}
@@ -435,11 +435,11 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		} else if (arg2 == CMD_SUSFS_ADD_SUS_KSTAT_STATICALLY) {
-			if (!access_ok(VERIFY_READ, (void __user*)arg3, sizeof(struct st_susfs_sus_kstat))) {
+			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_kstat))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_KSTAT_STATICALLY -> arg3 is not accessible\n");
                 return 0;
 			}
-			if (!access_ok(VERIFY_READ, (void __user*)arg5, sizeof(error))) {
+			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_KSTAT_STATICALLY -> arg5 is not accessible\n");
                 return 0;
 			}
@@ -448,11 +448,11 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
         } else if (arg2 == CMD_SUSFS_ADD_SUS_MAPS) {
-			if (!access_ok(VERIFY_READ, (void __user*)arg3, sizeof(struct st_susfs_sus_maps))) {
+			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_maps))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_MAPS -> arg3 is not accessible\n");
                 return 0;
 			}
-			if (!access_ok(VERIFY_READ, (void __user*)arg5, sizeof(error))) {
+			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_MAPS -> arg5 is not accessible\n");
                 return 0;
 			}
@@ -461,11 +461,11 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		} else if (arg2 == CMD_SUSFS_UPDATE_SUS_MAPS) {
-			if (!access_ok(VERIFY_READ, (void __user*)arg3, sizeof(struct st_susfs_sus_maps))) {
+			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_maps))) {
 				pr_err("susfs: CMD_SUSFS_UPDATE_SUS_MAPS -> arg3 is not accessible\n");
                 return 0;
 			}
-			if (!access_ok(VERIFY_READ, (void __user*)arg5, sizeof(error))) {
+			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
 				pr_err("susfs: CMD_SUSFS_UPDATE_SUS_MAPS -> arg5 is not accessible\n");
                 return 0;
 			}
@@ -474,11 +474,11 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
         } else if (arg2 == CMD_SUSFS_ADD_SUS_MAPS_STATICALLY) {
-			if (!access_ok(VERIFY_READ, (void __user*)arg3, sizeof(struct st_susfs_sus_maps))) {
+			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_maps))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_MAPS_STATICALLY -> arg3 is not accessible\n");
                 return 0;
 			}
-			if (!access_ok(VERIFY_READ, (void __user*)arg5, sizeof(error))) {
+			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_MAPS_STATICALLY -> arg5 is not accessible\n");
                 return 0;
 			}
@@ -487,11 +487,11 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		} else if (arg2 == CMD_SUSFS_ADD_SUS_PROC_FD_LINK) {
-			if (!access_ok(VERIFY_READ, (void __user*)arg3, sizeof(struct st_susfs_sus_proc_fd_link))) {
+			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_proc_fd_link))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_PROC_FD_LINK -> arg3 is not accessible\n");
                 return 0;
 			}
-			if (!access_ok(VERIFY_READ, (void __user*)arg5, sizeof(error))) {
+			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_PROC_FD_LINK -> arg5 is not accessible\n");
                 return 0;
 			}
@@ -500,11 +500,11 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		} else if (arg2 == CMD_SUSFS_ADD_TRY_UMOUNT) {
-			if (!access_ok(VERIFY_READ, (void __user*)arg3, sizeof(struct st_susfs_try_umount))) {
+			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_try_umount))) {
 				pr_err("susfs: CMD_SUSFS_ADD_TRY_UMOUNT -> arg3 is not accessible\n");
                 return 0;
 			}
-			if (!access_ok(VERIFY_READ, (void __user*)arg5, sizeof(error))) {
+			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
 				pr_err("susfs: CMD_SUSFS_ADD_TRY_UMOUNT -> arg5 is not accessible\n");
                 return 0;
 			}
@@ -513,11 +513,11 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		} else if (arg2 == CMD_SUSFS_SET_UNAME) {
-			if (!access_ok(VERIFY_READ, (void __user*)arg3, sizeof(struct st_susfs_uname))) {
+			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_uname))) {
 				pr_err("susfs: CMD_SUSFS_SET_UNAME -> arg3 is not accessible\n");
                 return 0;
 			}
-			if (!access_ok(VERIFY_READ, (void __user*)arg5, sizeof(error))) {
+			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
 				pr_err("susfs: CMD_SUSFS_SET_UNAME -> arg5 is not accessible\n");
                 return 0;
 			}
@@ -643,6 +643,8 @@ static void try_umount(const char *mnt, bool check_mnt, int flags)
 	err = ksu_umount_mnt(&path, flags);
 	if (err) {
 		pr_warn("umount %s failed: %d\n", mnt, err);
+	} else {
+		pr_info("umount %s successed", mnt);
 	}
 }
 
