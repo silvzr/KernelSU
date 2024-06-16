@@ -382,20 +382,24 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 #ifdef CONFIG_KSU_SUSFS
     if (current_uid().val == 0) {
         int error = 0;
-		if (arg2 == CMD_SUSFS_ADD_SUS_PATH) {
-			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_path))) {
-				pr_err("susfs: CMD_SUSFS_ADD_SUS_PATH -> arg3 is not accessible\n");
+#ifdef CONFIG_KSU_SUSFS_SUS_PATH
+        if (arg2 == CMD_SUSFS_ADD_SUS_PATH) {
+            if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_path))) {
+                pr_err("susfs: CMD_SUSFS_ADD_SUS_PATH -> arg3 is not accessible\n");
                 return 0;
 			}
 			if (!ksu_access_ok((void __user*)arg5, sizeof(error))) {
-				pr_err("susfs: CMD_SUSFS_ADD_SUS_PATH -> arg5 is not accessible\n");
+                pr_err("susfs: CMD_SUSFS_ADD_SUS_PATH -> arg5 is not accessible\n");
                 return 0;
 			}
-			error = susfs_add_sus_path((struct st_susfs_sus_path __user*)arg3);
+	    error = susfs_add_sus_path((struct st_susfs_sus_path __user*)arg3);
             pr_info("susfs: CMD_SUSFS_ADD_SUS_PATH -> ret: %d\n", error);
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
-		} else if (arg2 == CMD_SUSFS_ADD_SUS_MOUNT) {
+        }
+#endif //#ifdef CONFIG_KSU_SUSFS_SUS_PATH
+#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
+		if (arg2 == CMD_SUSFS_ADD_SUS_MOUNT) {
 			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_mount))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_MOUNT -> arg3 is not accessible\n");
                 return 0;
@@ -408,7 +412,10 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             pr_info("susfs: CMD_SUSFS_ADD_SUS_MOUNT -> ret: %d\n", error);
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
-		} else if (arg2 == CMD_SUSFS_ADD_SUS_KSTAT) {
+        }
+#endif //#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
+#ifdef CONFIG_KSU_SUSFS_SUS_KSTAT
+		if (arg2 == CMD_SUSFS_ADD_SUS_KSTAT) {
 			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_kstat))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_KSTAT -> arg3 is not accessible\n");
                 return 0;
@@ -421,7 +428,8 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             pr_info("susfs: CMD_SUSFS_ADD_SUS_KSTAT -> ret: %d\n", error);
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
-		} else if (arg2 == CMD_SUSFS_UPDATE_SUS_KSTAT) {
+        }
+		if (arg2 == CMD_SUSFS_UPDATE_SUS_KSTAT) {
 			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_kstat))) {
 				pr_err("susfs: CMD_SUSFS_UPDATE_SUS_KSTAT -> arg3 is not accessible\n");
                 return 0;
@@ -434,7 +442,8 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             pr_info("susfs: CMD_SUSFS_UPDATE_SUS_KSTAT -> ret: %d\n", error);
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
-		} else if (arg2 == CMD_SUSFS_ADD_SUS_KSTAT_STATICALLY) {
+                }
+        if (arg2 == CMD_SUSFS_ADD_SUS_KSTAT_STATICALLY) {
 			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_kstat))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_KSTAT_STATICALLY -> arg3 is not accessible\n");
                 return 0;
@@ -447,7 +456,10 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             pr_info("susfs: CMD_SUSFS_ADD_SUS_KSTAT_STATICALLY -> ret: %d\n", error);
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
-        } else if (arg2 == CMD_SUSFS_ADD_SUS_MAPS) {
+        }
+#endif //#ifdef CONFIG_KSU_SUSFS_SUS_KSTAT
+#ifdef CONFIG_KSU_SUSFS_SUS_MAPS
+        if (arg2 == CMD_SUSFS_ADD_SUS_MAPS) {
 			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_maps))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_MAPS -> arg3 is not accessible\n");
                 return 0;
@@ -460,7 +472,8 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             pr_info("susfs: CMD_SUSFS_ADD_SUS_MAPS -> ret: %d\n", error);
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
-		} else if (arg2 == CMD_SUSFS_UPDATE_SUS_MAPS) {
+                }
+        if (arg2 == CMD_SUSFS_UPDATE_SUS_MAPS) {
 			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_maps))) {
 				pr_err("susfs: CMD_SUSFS_UPDATE_SUS_MAPS -> arg3 is not accessible\n");
                 return 0;
@@ -473,7 +486,8 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             pr_info("susfs: CMD_SUSFS_UPDATE_SUS_MAPS -> ret: %d\n", error);
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
-        } else if (arg2 == CMD_SUSFS_ADD_SUS_MAPS_STATICALLY) {
+        }
+        if (arg2 == CMD_SUSFS_ADD_SUS_MAPS_STATICALLY) {
 			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_maps))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_MAPS_STATICALLY -> arg3 is not accessible\n");
                 return 0;
@@ -486,7 +500,10 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             pr_info("susfs: CMD_SUSFS_ADD_SUS_MAPS_STATICALLY -> ret: %d\n", error);
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
-		} else if (arg2 == CMD_SUSFS_ADD_SUS_PROC_FD_LINK) {
+                }
+#endif //#ifdef CONFIG_KSU_SUSFS_SUS_MAPS
+#ifdef CONFIG_KSU_SUSFS_SUS_PROC_FD_LINK
+        if (arg2 == CMD_SUSFS_ADD_SUS_PROC_FD_LINK) {
 			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_sus_proc_fd_link))) {
 				pr_err("susfs: CMD_SUSFS_ADD_SUS_PROC_FD_LINK -> arg3 is not accessible\n");
                 return 0;
@@ -499,7 +516,10 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             pr_info("susfs: CMD_SUSFS_ADD_SUS_PROC_FD_LINK -> ret: %d\n", error);
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
-		} else if (arg2 == CMD_SUSFS_ADD_TRY_UMOUNT) {
+                }
+#endif //#ifdef CONFIG_KSU_SUSFS_SUS_PROC_FD_LINK
+#ifdef CONFIG_KSU_SUSFS_TRY_UMOUNT
+        if (arg2 == CMD_SUSFS_ADD_TRY_UMOUNT) {
 			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_try_umount))) {
 				pr_err("susfs: CMD_SUSFS_ADD_TRY_UMOUNT -> arg3 is not accessible\n");
                 return 0;
@@ -512,7 +532,10 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             pr_info("susfs: CMD_SUSFS_ADD_TRY_UMOUNT -> ret: %d\n", error);
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
-		} else if (arg2 == CMD_SUSFS_SET_UNAME) {
+                }
+#endif //#ifdef CONFIG_KSU_SUSFS_TRY_UMOUNT
+#ifdef CONFIG_KSU_SUSFS_SPOOF_UNAME
+        if (arg2 == CMD_SUSFS_SET_UNAME) {
 			if (!ksu_access_ok((void __user*)arg3, sizeof(struct st_susfs_uname))) {
 				pr_err("susfs: CMD_SUSFS_SET_UNAME -> arg3 is not accessible\n");
                 return 0;
@@ -525,7 +548,10 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 			pr_info("susfs: CMD_SUSFS_SET_UNAME -> ret: %d\n", error);
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
-		} else if (arg2 == CMD_SUSFS_ENABLE_LOG) {
+                }
+#endif //#ifdef CONFIG_KSU_SUSFS_SPOOF_UNAME
+#ifdef CONFIG_KSU_SUSFS_ENABLE_LOG
+        if (arg2 == CMD_SUSFS_ENABLE_LOG) {
 			if (arg3 != 0 && arg3 != 1) {
 				pr_err("susfs: CMD_SUSFS_ENABLE_LOG -> arg3 can only be 0 or 1\n");
                 return 0;
@@ -534,9 +560,9 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
             copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
-        return 0;
+#endif //#ifdef CONFIG_KSU_SUSFS_ENABLE_LOG
 	}
-#endif
+#endif //#ifdef CONFIG_KSU_SUSFS
 
 	// all other cmds are for 'root manager'
 	if (!from_manager) {
@@ -700,6 +726,11 @@ int ksu_handle_setuid(struct cred *new, const struct cred *old)
 		current->pid);
 #endif
 
+#ifdef CONFIG_KSU_SUSFS_TRY_UMOUNT
+	// susfs come first, and lastly umount by ksu, make sure umount in reversed order
+	susfs_try_umount(new_uid.val);
+#endif
+
 	// fixme: use `collect_mounts` and `iterate_mount` to iterate all mountpoint and
 	// filter the mountpoint whose target is `/data/adb`
 	try_umount("/system", true, 0);
@@ -711,9 +742,6 @@ int ksu_handle_setuid(struct cred *new, const struct cred *old)
 	try_umount("/debug_ramdisk", false, MNT_DETACH);
 	try_umount("/sbin", false, MNT_DETACH);
 
-#ifdef CONFIG_KSU_SUSFS
-	susfs_try_umount(new_uid.val);
-#endif
 	return 0;
 }
 
