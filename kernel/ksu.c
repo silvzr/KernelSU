@@ -54,7 +54,7 @@ int __init kernelsu_init(void)
 #endif
 
 #ifdef CONFIG_KSU_SUSFS
-    susfs_init();
+    	susfs_init();
 #endif
 
 	ksu_core_init();
